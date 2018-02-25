@@ -1,5 +1,5 @@
 ## Distributed File System
-Key features:
+### Key features:
 #### Parallel retrievals:
 large files are split into multiple chunks. Client applications retrieve these chunks in parallel.
 #### Interoperability: 
@@ -11,9 +11,9 @@ The implemention is done in java. Communication between components are implement
 
 The components included are:
 
-    * Controller
-    * Storage Node
-    * Client
+* Controller
+* Storage Node
+* Client
 
 #### Controller
 The Controller is responsible for managing resources in the system, somewhat like an HDFS NameNode. When a new storage node joins the DFS, the first thing it does is contact the Controller. The Controller manages a few data structures:
@@ -31,14 +31,14 @@ Storage nodes are responsible for storing and retrieving file chunks. When a chu
 
 Some messages that storage node accept:
 
-    * Store chunk [File name, Chunk Number, Chunk Data]
-    * Retrieve chunk [File name, Chunk Number]
+* Store chunk [File name, Chunk Number, Chunk Data]
+* Retrieve chunk [File name, Chunk Number]
 
 The storage nodes send a heartbeat to the controller periodically. The heartbeat includes chunk metadata to keep the Controller up to date, while also letting it know that the node is still alive. It also includes the amount of free space available at the node so that the Controller has an idea of resource availability.
 
 #### Client
 The client’s main functions include:
 
-    * Breaking files into chunks, asking the Controller where to store them, and then sending them to the appropriate storage node(s). 
-    * Retrieving files in parallel.
-    * Print out a list of files (retrieved from the Controller), and the total available disk space in the cluster (in GB).
+* Breaking files into chunks, asking the Controller where to store them, and then sending them to the appropriate storage node(s). 
+* Retrieving files in parallel.
+* Print out a list of files (retrieved from the Controller), and the total available disk space in the cluster (in GB).
