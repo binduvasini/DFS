@@ -1,19 +1,26 @@
 ## Distributed File System
-### Key features:
-#### Parallel retrievals:
-large files are split into multiple chunks. Client applications retrieve these chunks in parallel.
-#### Interoperability: 
-the DFS uses Google Protocol Buffers to serialize messages. This allows other applications to easily implement the wire format.
-#### Fault tolerance: 
-Detects and withstands two concurrent storage node failures and continue operating normally. It also recovers corrupted files.
 
-The implemention is done in java. Communication between components are implemented via sockets.
-
-The components included are:
-
+### Main components:
+* Client
 * Controller
 * Storage Node
-* Client
+
+### Key features:
+#### Parallel file retrievals:
+Large files are split into multiple chunks. Client applications retrieve these chunks in parallel.
+#### Interoperability:
+The messages are serialized using Google Protocol Buffers, allowing other applications to easily implement the wire format.
+#### Fault tolerance:
+Concurrent storage node failures are detected and the system continues to operate normally. Corrupted files are also recovered.
+
+The system is implemented in java. Communication between components are implemented via sockets.
+
+#### Client
+The client’s main functions include:
+
+* Breaking files into chunks, asking the Controller where to store them, and then sending them to the appropriate storage node(s). 
+* Retrieving files in parallel.
+* Print out a list of files (retrieved from the Controller), and the total available disk space in the cluster (in GB).
 
 #### Controller
 The Controller is responsible for managing resources in the system, somewhat like an HDFS NameNode. When a new storage node joins the DFS, the first thing it does is contact the Controller. The Controller manages a few data structures:
@@ -35,10 +42,3 @@ Some messages that storage node accept:
 * Retrieve chunk [File name, Chunk Number]
 
 The storage nodes send a heartbeat to the controller periodically. The heartbeat includes chunk metadata to keep the Controller up to date, while also letting it know that the node is still alive. It also includes the amount of free space available at the node so that the Controller has an idea of resource availability.
-
-#### Client
-The client’s main functions include:
-
-* Breaking files into chunks, asking the Controller where to store them, and then sending them to the appropriate storage node(s). 
-* Retrieving files in parallel.
-* Print out a list of files (retrieved from the Controller), and the total available disk space in the cluster (in GB).
